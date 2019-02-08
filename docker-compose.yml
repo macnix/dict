@@ -1,0 +1,38 @@
+version: '2'
+services:
+ mongodb:
+  image: mongo:4.0.5
+  restart: always
+  ports:
+   - "27017:27017"
+  environment:
+      - MONGO_INITDB_DATABASE=DICT
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=masterkey
+
+ mongoclient:
+  image: mongoclient/mongoclient
+  container_name: mongoclient
+  restart: always
+  ports:
+   - 443:3000
+  links:
+   - mongodb
+
+ mongo-seed:
+   image: mongo:4.0.5
+   links:
+    - mongodb
+   volumes:
+    - ./data:/data
+   command:
+     'bash -c "mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey --db DICT --collection Settlement --type json --file /data/Settlements.json --jsonArray  && mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey --db DICT --collection DCity --type json --file /data/DCity.json --jsonArray  && mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey  --db DICT --collection DMark --type json --file /data/DMark.json --jsonArray"'
+# APP ************************************************************
+ springboot:
+  build: ./
+  restart: always
+  container_name: dict-app
+  ports:
+   - 8060:8080
+  links:
+   - mongodb
