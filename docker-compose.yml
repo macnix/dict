@@ -26,7 +26,7 @@ services:
    volumes:
     - ./data:/data
    command:
-     'bash -c "mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey --db DICT --collection Settlement --type json --file /data/Settlements.json --jsonArray  && mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey --db DICT --collection DCity --type json --file /data/DCity.json --jsonArray  && mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey  --db DICT --collection DMark --type json --file /data/DMark.json --jsonArray"'
+     'bash -c "mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey --db DICT --collection DMark --type json --file /data/DMark.json --jsonArray  && mongoimport --host mongodb --authenticationDatabase admin --username root --password masterkey --db DICT --collection DCity --type json --file /data/DCity.json --jsonArray"'
 # APP ************************************************************
  springboot:
   build: ./

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.co.styx.dict.model.DCity;
 import ua.co.styx.dict.model.DMark;
-import ua.co.styx.dict.model.Settlement;
 
 import java.io.*;
 import java.util.*;
@@ -23,7 +22,7 @@ import java.util.*;
 @RequestMapping("/api")
 public class ApiController {
 
-    public static final String DBHost = "mongodb"; //mongodb  172.16.16.14
+    public static final String DBHost = "172.16.16.14"; //mongodb  172.16.16.14
     public static final String DB = "DICT";
     public static final String DBuser = "root";
     public static final String DBpwd = "masterkey";
@@ -64,22 +63,7 @@ public class ApiController {
         return documents;
     }
 
-    @GetMapping("/Settlement")
-    public List<Settlement> GetSettlement() throws IOException {
-        MongoClient mongoClient = null;
-        MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(DBuser, "admin",
-                DBpwd.toCharArray());
 
-        mongoClient = new MongoClient(new ServerAddress(DBHost, 27017), Arrays.asList(mongoCredential));
-        MongoDatabase database = mongoClient.getDatabase (DB);
-        String collectionName = "Settlement";
-        MongoCollection<Settlement> collection = null;
-        List<Settlement> documents = null;
-        collection = database.getCollection ("Settlement", Settlement.class);
-        documents = (List<Settlement>) collection.find().into( new ArrayList<Settlement>());
-
-        return documents;
-    }
 
     private boolean GetExits(MongoDatabase database, String collectionName) {
         MongoIterable<String> collection =  database.listCollectionNames();

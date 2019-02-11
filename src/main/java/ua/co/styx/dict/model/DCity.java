@@ -21,13 +21,23 @@ public class DCity extends BasicDBObject implements Serializable {
 	private int DRegionID;
     private String KOATUU;
     private int DZoneID;
+    private String GID;
 
-    public DCity(int ID, String Name, int DRegionID, String KOATUU, int DZoneID) {
+    public DCity(int ID, String Name, int DRegionID, String KOATUU, int DZoneID, String GID) {
 		super.put("DRegionID", DRegionID);
         super.put("ID", ID);
         super.put("Name", Name);
         super.put("KOATUU", KOATUU);
         super.put("DZoneID", DZoneID);
+        super.put("GID", GID);
+    }
+
+    public String getGID() {
+        return (String) super.get("GID");
+    }
+
+    public void setGID(String GID) {
+        super.put("GID", GID);
     }
 
     public int getDRegionID() {
